@@ -2,44 +2,35 @@
 
 @section('content')
 <div class="container">
-    <form action="/p" enctype="multipart/form-data" method="post">
-        @csrf
-        <div class="row">
-            <div class="col-8 offset-2">
-                <div class="row">
-                    <h1>Add New Post</h1>
-                </div>
-                <div class="form-group row">
-                    <label for="caption" class="col-md-4 col-form-label">Post Caption</label>
-                    <input id="caption"
-                            type="text"
-                            class="form-control @error('caption') is-invalid @enderror"
-                            name="caption"
-                            value="{{ old('caption') }}"
-                            autocomplete="caption" autofocus>
-
-                    @error('caption')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <div class="row">
-                    <label for="image   " class="col-md-4 col-form-label">Post Image</label>
-
-                    <input type="file" class="form-control-file" id="image" name="image">
-
-                    @error('image')
-                        <span role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                <div class="row pt-4">
-                    <button class="btn btn-primary">Add New Post</button>
+    <div class="row">
+        <div class="col-8">
+            <img src="/storage/{{ $post->image }}" style="width: 10em" class="w-100">
+        </div>
+        <div class="col-4">
+            <div>
+                <div class="d-flex align-items-center">
+                    <div class="pr-3">
+                        <img src="{{ $post->user->profile->profileImage() }}" class="rounded-circle w-100" style="max-width: 50px">
+                    </div>
+                    <div>
+                        <div class="font-weight-bold">
+                            <a href="/profile/{{ $post->user->id }}">
+                                <span class="text-dark">{{ $post->user->username }}</span>
+                            </a>
+                            <a href="#" class="pl-3">follow</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <hr>
+            <p>
+                <span class="font-weight-bold">
+                    <a href="/profile/{{ $post->user->id }}">
+                        <span class="text-dark">{{ $post->user->username }}</span>
+                    </a>
+                </span> {{ $post->caption }}
+            </p>
         </div>
-    </form>
+    </div>
 </div>
 @endsection
